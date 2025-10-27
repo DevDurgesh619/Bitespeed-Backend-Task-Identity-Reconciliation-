@@ -59,47 +59,13 @@ ORM: Prisma
 Database: PostgreSQL (e.g., on Neon)
 
 Getting Started
-
-API Endpoint
-
-POST /identify
-
-This is the only endpoint. It accepts a JSON body with an email and/or phoneNumber.
-
-Request Body:
-
-{
-  "email": "user@example.com",
-  "phoneNumber": "123456"
-}
-
-
-Success Response (200 OK):
-
-{
-  "contact": {
-    "primaryContactId": 1,
-    "emails": ["user@example.com", "another@example.com"],
-    "phoneNumbers": ["123456", "789012"],
-    "secondaryContactIds": [2, 3]
-  }
-}
-
-
-Error Response (400 Bad Request):
-
-{
-  "error": "Input Error: email must be a string."
-}
-
-
 How to Test (Using Postman)
 
 Open Postman and create a new request.
 
 Set the method to POST.
 
-Set the URL to http://localhost:3000/identify.
+Set the URL to https://bitespeed-backend-task-identity-ccbb.onrender.com/identif.
 
 Go to the Body tab, select raw, and choose JSON from the dropdown.
 
@@ -204,6 +170,40 @@ Payload:
 {
   "email": 12345
 }
+
+API Endpoint
+
+POST /identify
+
+This is the only endpoint. It accepts a JSON body with an email and/or phoneNumber.
+
+Request Body:
+
+{
+  "email": "user@example.com",
+  "phoneNumber": "123456"
+}
+
+
+Success Response (200 OK):
+
+{
+  "contact": {
+    "primaryContactId": 1,
+    "emails": ["user@example.com", "another@example.com"],
+    "phoneNumbers": ["123456", "789012"],
+    "secondaryContactIds": [2, 3]
+  }
+}
+
+
+Error Response (400 Bad Request):
+
+{
+  "error": "Input Error: email must be a string."
+}
+
+
 
 
 Result: Returns a 400 Bad Request.
