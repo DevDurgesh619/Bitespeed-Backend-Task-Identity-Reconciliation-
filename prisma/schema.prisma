@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Set your DATABASE_URL in the .env file
+  url      = env("DATABASE_URL")
+}
+
+// Define the Contact model
+model Contact {
+  id             Int       @id @default(autoincrement())
+  phoneNumber    String?
+  email          String?
+  linkedId       Int? // This will point to the id of the PRIMARY contact
+  linkPrecedence LinkPrecedence
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Self-relation for linking secondary contacts to a primary
+  // 'primaryContact' holds the contact this record is linked to (if secondary)
+  primaryContact   Contact?  @relation("PrimaryToSecondary", fields: [linkedId], references: [id])
+  // 'secondaryContacts' holds all contacts that link to this one (if primary)
+  secondaryContacts Contact[] @relation("PrimaryToSecondary")
+
+  @@index([email])
+  @@index([phoneNumber])
+}
+
+enum LinkPrecedence {
+  PRIMARY
+  SECONDARY
+}
